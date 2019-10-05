@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Registro</title>
+    <link type="text/css" rel="stylesheet" href="home.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="home.js"></script>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li onclick="logout()">Usuário atual: <span id="currentUser"></span> - <a href="#">Sair</a></li>
+      </ul>
+    </nav>
+
+    <h1>Área Pessoal</h1>
+    <a href="#" onclick="showOptions()">Novo Projeto</a>
+    <div id="newProject">
+      <input type="text" name="projName" placeholder="Nome do Projeto">
+      <label for="members">Outros membros</label>
+      <select name="members" id="userList" multiple>
+        <option value="jose">jose</option>
+        <option value="pedro">pedro</option>
+        <option value="valentim">valentim</option>
+      </select>
+      <button type="button" onclick="newProject()">Criar</button>
+    </div>
+    <h3>Meus Projetos</h3>
+    <div id="myProjects">
+      <table>
+        <tr>
+          <th>#id</th>
+          <th>Nome</th>
+          <th>% tarefas concluidas</th>
+          <th>Membros</th>
+          <th></th>
+        </tr>
+        <tr>
+          <td>00</td>
+          <td>teste 1</td>
+          <td>30%</td>
+          <td><ul>
+            <li>alex</li>
+          </ul></td>
+          <td><button type="button" name="button">Editar</button></td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- <div id="tasks">
+      <table>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </table>
+    </div> -->
+
+
+  </body>
+</html>
