@@ -22,7 +22,7 @@ $( document ).ready(function() {
   };
   $("#currentUser").html(loggedUser);
   $("#newProject").hide();
-
+  populateProjTable();
 
 });
 
@@ -55,5 +55,26 @@ function newProject() {
   };
   projectCatalog.push(newProj);
   localStorage.setItem("RdT_projectCatalog",JSON.stringify(projectCatalog));
+};
+
+function populateProjTable() {
+  getProjectCatalog();
+  var tbody = "";
+  if (projectCatalog.length==0) {
+    tbody = "<tr><td colspan='4'>Você ainda não participa de nenhum projeto.</td></tr>";
+  } else {
+    tbody = "<tbody>";
+    for (var i = 0; i < projectCatalog.length; i++) {
+      tbody+= "<tr>"+
+          "<td>"+projectCatalog[i].id+"</td>"+
+          "<td>"+projectCatalog[i].projName+"</td>"+
+          "<td>"+projectCatalog[i].tasks.length+"</td>"+
+          "<td>"+projectCatalog[i].members+"</td>"+
+          "<td><button type='button' onclick=''>Editar</button></td>"
+    };
+  };
+
+  $('table:last').append(tbody);
+  // return tbody;
 
 };
