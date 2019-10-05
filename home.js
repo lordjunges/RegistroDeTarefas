@@ -24,6 +24,7 @@ $( document ).ready(function() {
   $("#newProject").hide();
   populateProjTable();
 
+
 });
 
 function logout(){
@@ -55,6 +56,8 @@ function newProject() {
   };
   projectCatalog.push(newProj);
   localStorage.setItem("RdT_projectCatalog",JSON.stringify(projectCatalog));
+  localStorage.setItem("RdT_projectID",id+1);
+  window.location.replace("project.html");
 };
 
 function populateProjTable() {
@@ -70,11 +73,13 @@ function populateProjTable() {
           "<td>"+projectCatalog[i].projName+"</td>"+
           "<td>"+projectCatalog[i].tasks.length+"</td>"+
           "<td>"+projectCatalog[i].members+"</td>"+
-          "<td><button type='button' onclick=''>Editar</button></td>"
+          "<td><button type='button' onclick='editProject("+projectCatalog[i].id+")'>Editar</button></td>"
     };
   };
-
   $('table:last').append(tbody);
-  // return tbody;
+};
 
+function editProject(id) {
+  localStorage.setItem("RdT_projectID",id);
+  window.location.replace("project.html");
 };

@@ -17,13 +17,14 @@
     <h1>Área Pessoal</h1>
     <a href="#" onclick="showOptions()">Novo Projeto</a>
     <div id="newProject">
-      <input type="text" name="projName" placeholder="Nome do Projeto">
+      <input type="text" name="projName" placeholder="Nome do Projeto" required>
       <label for="members">Outros membros</label>
-      <select name="members" id="userList" multiple>
-        <option value="jose">jose</option>
+      <select name="members" id="userList" multiple required>
+        <option value="jose" selected>jose</option>
         <option value="pedro">pedro</option>
         <option value="valentim">valentim</option>
       </select>
+      <!-- <input  type="submit" onsubmit="newProject()" value="Criar"/> -->
       <button type="button" onclick="newProject()">Criar</button>
     </div>
     <h3>Meus Projetos</h3>
@@ -45,21 +46,8 @@
           </ul></td>
           <td><button type="button" name="button">Editar</button></td>
         </tr> -->
-        <!-- <tr calspan='5'>Você ainda não participa de nenhum projeto.</tr> -->
       </table>
     </div>
-
-    <!-- <div id="tasks">
-      <table>
-        <tr>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-        </tr>
-      </table>
-    </div> -->
-
-
+    <br><br><br><br><footer>Atenção: Só é possível visualizar/editar os projetos nos quais é membro.</footer>
   </body>
 </html>
