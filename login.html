@@ -2,22 +2,21 @@
 <html lang="pt" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Registro</title>
+    <title>Entrar</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="register.js"></script>
+    <script src="login.js"></script>
   </head>
   <body>
     <nav>
       <ul>
-        <li><a href="login.html">Entrar</a></li>
+        <li><a href="register.html">Registrar Novo Utilizador</a></li>
       </ul>
     </nav>
-    <h1>Registro de Utilizadores</h1>
+    <h1>Login</h1>
     <div>
       <input type="text" name="username" placeholder="Insira um Nome de Utilizador">
-      <input type="text" name="name" placeholder="Insira seu nome completo">
       <input type="password" name="password" placeholder="Insira uma palavra-passe">
-      <button type="button" name="register_btn" onclick="addUser()">Registrar</button>
+      <button type="button" name="login_btn" onclick="login()">Entrar</button>
     </div>
     <p id="info"></p>
 
