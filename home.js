@@ -23,7 +23,7 @@ $( document ).ready(function() {
   $("#currentUser").html(loggedUser);
   $("#newProject").hide();
   populateProjTable();
-
+  fillNewProjUserList();
 
 });
 
@@ -47,7 +47,7 @@ function newProject() {
   var projName = $('input[name ="projName"]').val();
   var tasks = new Array();
   var members = $('#userList').val();
-  members.push(loggedUser);
+  if (members==null){members=[loggedUser]}else{members.push(loggedUser)};
   var newProj = {
     id:id+1,
     projName:projName,
@@ -68,15 +68,42 @@ function populateProjTable() {
   } else {
     tbody = "<tbody>";
     for (var i = 0; i < projectCatalog.length; i++) {
+      var nTotalTasks = projectCatalog[i].tasks.length;
+      var nTasksDone = 0;
+      for (var x = 0; x < projectCatalog[i].tasks.length; x++) {
+        if (projectCatalog[i].tasks[x].status=="Finalizada") {
+          nTasksDone++;
+        };
+      };
+      var taskProgress = ""
+      if (nTotalTasks==0) {
+        taskProgress+="<td>Não há tarefas</td>"
+      }else {
+        taskProgress+="<td>"+parseInt(nTasksDone/nTotalTasks*100)+"% ("+nTasksDone+"/"+nTotalTasks+")</td>"
+      };
       tbody+= "<tr>"+
           "<td>"+projectCatalog[i].id+"</td>"+
           "<td>"+projectCatalog[i].projName+"</td>"+
-          "<td>"+projectCatalog[i].tasks.length+"</td>"+
+          taskProgress+
           "<td>"+projectCatalog[i].members+"</td>"+
           "<td><button type='button' onclick='editProject("+projectCatalog[i].id+")'>Editar</button></td>"
     };
   };
+  tbody+= "</tbody>"
   $('table:last').append(tbody);
+};
+
+function fillNewProjUserList(){
+  getUserCatalog();
+  var options = ""
+  for (var i = 0; i < userCatalog.length; i++) {
+    if (userCatalog[i].username==loggedUser) {
+      options+="<option value='"+loggedUser+"' disabled>"+loggedUser+"</option>"
+    }else {
+      options+="<option value='"+userCatalog[i].username+"'>"+userCatalog[i].username+"</option>"
+    };
+  };
+  $('select:last').append(options);
 };
 
 function editProject(id) {

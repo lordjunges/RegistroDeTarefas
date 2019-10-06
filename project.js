@@ -14,6 +14,13 @@ if (projectID!=null) {
   };
 };
 
+function getUserCatalog() {
+  var localCatalog = localStorage.getItem("RdT_userCatalog");
+  if (localCatalog!=null) {
+    userCatalog = JSON.parse(localCatalog);
+  };
+};
+
 function getProjectCatalog() {
   var localCatalog = localStorage.getItem("RdT_projectCatalog");
   if (localCatalog!=null) {
@@ -41,7 +48,7 @@ $( document ).ready(function() {
   $('#projMembers:last').append(members);
   $("#newTask").hide();
   populateTasksTable();
-
+  fillTaskOwnerList();
 });
 
 function showOptions() {
@@ -113,7 +120,7 @@ function populateTasksTable(){
         var minutes = endTime.diff(startTime, "minutes");
         var hours = endTime.diff(startTime, "hours");
         var days = endTime.diff(startTime, "days");
-        tbody+="<td>"+days+"d"+hours+"h"+minutes+"m</td>";
+        tbody+="<td>"+days+"D "+hours+"H "+minutes+"M</td>";
       };
       if (project.tasks[i].status=="Nova") {
         tbody+="<td><button type='button' onclick='startTask("+project.tasks[i].id+")'>Iniciar</button></td>"
@@ -139,4 +146,13 @@ function endTask(taskID){
   project.tasks[taskID-1].end=endTime;
   project.tasks[taskID-1].status="Finalizada";
   saveChanges();
+};
+
+function fillTaskOwnerList(){
+  getUserCatalog();
+  var options = "";
+  for (var i = 0; i < userCatalog.length; i++) {
+    options+="<option value='"+userCatalog[i].username+"'>"+userCatalog[i].username+"</option>"
+  };
+  $('select:last').append(options);
 };
