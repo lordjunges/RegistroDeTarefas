@@ -3,8 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>Registro</title>
-    <!-- <link type="text/css" rel="stylesheet" href="project.css"> -->
+    <link type="text/css" rel="stylesheet" href="project.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="moment.min.js"></script>
     <script src="project.js"></script>
   </head>
   <body>
@@ -18,31 +19,42 @@
     <h1>Projeto: <span id='projName'></span></h1>
     <p>ID: <span id="projID"></span></p>
     <p>Membros:</p>
-    <ul id="projMembers">      
+    <ul id="projMembers">
     </ul>
-    <!-- <a href="#" onclick="showOptions()">Novo Projeto</a> -->
-    <!-- <div id="newProject">
-      <input type="text" name="projName" placeholder="Nome do Projeto">
-      <label for="members">Outros membros</label>
-      <select name="members" id="userList" multiple>
+    <a href="#" onclick="showOptions()">Nova Tarefa</a>
+    <div id="newTask">
+      <input type="text" name="description" placeholder="Descrição">
+      <label for="members">Responsável</label>
+      <select name="members" id="userList">
         <option value="jose">jose</option>
-        <option value="pedro">pedro</option>
-        <option value="valentim">valentim</option>
+        <option value="alex">pedro</option>
       </select>
-      <button type="button" onclick="newProject()">Criar</button>
-    </div> -->
+      <button type="button" onclick="newTask()">Criar</button>
+    </div>
     <h3>Tarefas</h3>
-    <!-- <div id="tasks">
+    <div id="tasks">
       <table>
         <tr>
-          <th>#id</th>
-          <th>Nome</th>
-          <th>% tarefas concluidas</th>
-          <th>Membros</th>
-
+          <th>#ID</th>
+          <th>Descrição</th>
+          <th>Responsável</th>
+          <th>Status</th>
+          <th>Início</th>
+          <th>Fim</th>
+          <th>Tempo Gasto</th>
         </tr>
+        <!-- <tr>
+          <td>00</td>
+          <td>Varrer o chão da casa</td>
+          <td>Alex</td>
+          <td>Em Andamento</td>
+          <td>06/10/2019 - 18:00</td>
+          <td>--</td>
+          <td>15h30m</td>
+          <td><button type="button" name="endTask">Finalizar</button></td>
+        </tr> -->
 
       </table>
-    </div> -->
+    </div>
   </body>
 </html>
