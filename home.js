@@ -68,7 +68,6 @@ function populateProjTable() {
   } else {
     tbody = "<tbody>";
     for (var i = 0; i < projectCatalog.length; i++) {
-      console.log(i,projectCatalog[i].members);
       if (projectCatalog[i].members.includes(loggedUser)) {
         var nTotalTasks = projectCatalog[i].tasks.length;
         var nTasksDone = 0;

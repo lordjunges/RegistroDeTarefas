@@ -6,7 +6,6 @@ var projectCatalog = new Array();
 if (projectID!=null) {
   getProjectCatalog();
   var projIndex=projectID-1;
-  // console.log(projIndex,projectID-1);
   for (var i = 0; i < projectCatalog.length; i++) {
     if (projectCatalog[i].id==projectID) {
       var project=projectCatalog[i];
@@ -75,14 +74,10 @@ function newTask(){
   if (project.tasks.length==0) {$("#noTasks").remove()};
   project.tasks.push(newTask);
   $('input[name ="description"]').val("");
-  // projectCatalog[projIndex]=project;
-  // localStorage.setItem("RdT_projectCatalog",JSON.stringify(projectCatalog));
-  // populateTasksTable();
   saveChanges();
 };
 
 function populateTasksTable(){
-  // getProjectCatalog();
   $(".allTasks").remove();
   var tbody = "";
   if (project.tasks.length==0) {
@@ -97,7 +92,6 @@ function populateTasksTable(){
           "<td>"+project.tasks[i].status+"</td>";
       if (project.tasks[i].start=="--") { // Tarefa não iniciada
         tbody+="<td>"+project.tasks[i].start+"</td>";
-        // var taskNotStarted = "<td>--</td>";
       }else { // Tarefa iniciada
         var startObj = new moment(project.tasks[i].start);
         tbody+="<td>"+startObj.format('DD/MM/YYYY LT')+"</td>";
@@ -130,7 +124,6 @@ function populateTasksTable(){
           tbody+="<td><button type='button' onclick='endTask("+project.tasks[i].id+")'>Finalizar</button></td>"
         };
       };
-      // "<td><button type='button' onclick='editProject("+projectCatalog[i].id+")'>Editar</button></td>"
     };
   };
   tbody+= "</tbody>"
@@ -152,7 +145,6 @@ function endTask(taskID){
 };
 
 function fillTaskOwnerList(){
-  // getUserCatalog();
   var options = "";
   for (var i = 0; i < project.members.length; i++) {
     options+="<option value='"+project.members[i]+"'>"+project.members[i]+"</option>"
