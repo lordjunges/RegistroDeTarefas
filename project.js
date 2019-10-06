@@ -21,6 +21,12 @@ function getProjectCatalog() {
   };
 };
 
+function saveChanges(){
+  projectCatalog[projIndex]=project;
+  localStorage.setItem("RdT_projectCatalog",JSON.stringify(projectCatalog));
+  populateTasksTable();
+};
+
 $( document ).ready(function() {
   if (loggedUser==null) {
     window.location.replace("login.html");
@@ -61,13 +67,14 @@ function newTask(){
   };
   if (project.tasks.length==0) {$("#noTasks").remove()};
   project.tasks.push(newTask);
-  projectCatalog[projIndex]=project;
-  localStorage.setItem("RdT_projectCatalog",JSON.stringify(projectCatalog));
-  populateTasksTable();
+  // projectCatalog[projIndex]=project;
+  // localStorage.setItem("RdT_projectCatalog",JSON.stringify(projectCatalog));
+  // populateTasksTable();
+  saveChanges();
 };
 
 function populateTasksTable(){
-  getProjectCatalog();
+  // getProjectCatalog();
   $(".allTasks").remove();
   var tbody = "";
   if (project.tasks.length==0) {
@@ -80,36 +87,56 @@ function populateTasksTable(){
           "<td>"+project.tasks[i].description+"</td>"+
           "<td>"+project.tasks[i].owner+"</td>"+
           "<td>"+project.tasks[i].status+"</td>";
-      if (project.tasks[i].start=="--") {
+      if (project.tasks[i].start=="--") { // Tarefa não iniciada
         tbody+="<td>"+project.tasks[i].start+"</td>";
-        var taskNotStarted = "<td>--</td>";
-      }else {
-        tbody+="<td>"+project.tasks[i].start.format('DD/MM/YYYY LT')+"</td>";
+        // var taskNotStarted = "<td>--</td>";
+      }else { // Tarefa iniciada
+        var startObj = new moment(project.tasks[i].start);
+        tbody+="<td>"+startObj.format('DD/MM/YYYY LT')+"</td>";
       };
-      if (project.tasks[i].end=="--") {
+      if (project.tasks[i].end=="--") { // Tareja não finalizada
         tbody+="<td>"+project.tasks[i].end+"</td>";
-        if (taskNotStarted) { // Tarefa não iniciada
-          tbody+=taskNotStarted;
+        if (project.tasks[i].status=="Nova") {
+          tbody+="<td>--</td>";
         }else { // Tarefa iniciada, mas não finalizada
-          var startTime = project.tasks[i].start;
+          var startTime = new moment(project.tasks[i].start);
           var now = new moment();
           var minutes = now.diff(startTime, "minutes");
           var hours = now.diff(startTime, "hours");
           var days = now.diff(startTime, "days");
-          tbody+="<td>"+days+"d"+hours+"h"+minutes+"m</td>";
+          tbody+="<td>"+days+"D "+hours+"H "+minutes+"M</td>";
         };
       }else { // Tarefa já finalizada
-        var startTime = project.tasks[i].start;
-        var endTime = project.tasks[i].end;
-        tbody+="<td>"+project.tasks[i].end.format('DD/MM/YYYY LT')+"</td>";
+        var startTime = new moment(project.tasks[i].start);
+        var endTime = new moment(project.tasks[i].end);
+        tbody+="<td>"+endTime.format('DD/MM/YYYY LT')+"</td>";
         var minutes = endTime.diff(startTime, "minutes");
         var hours = endTime.diff(startTime, "hours");
         var days = endTime.diff(startTime, "days");
         tbody+="<td>"+days+"d"+hours+"h"+minutes+"m</td>";
+      };
+      if (project.tasks[i].status=="Nova") {
+        tbody+="<td><button type='button' onclick='startTask("+project.tasks[i].id+")'>Iniciar</button></td>"
+      }else if (project.tasks[i].status=="Em Andamento") {
+        tbody+="<td><button type='button' onclick='endTask("+project.tasks[i].id+")'>Finalizar</button></td>"
       };
       // "<td><button type='button' onclick='editProject("+projectCatalog[i].id+")'>Editar</button></td>"
     };
   };
   tbody+= "</tbody>"
   $('table:last').append(tbody);
+};
+
+function startTask(taskID){
+  var startTime = new moment();
+  project.tasks[taskID-1].start=startTime;
+  project.tasks[taskID-1].status="Em Andamento";
+  saveChanges();
+};
+
+function endTask(taskID){
+  var endTime = new moment();
+  project.tasks[taskID-1].end=endTime;
+  project.tasks[taskID-1].status="Finalizada";
+  saveChanges();
 };
