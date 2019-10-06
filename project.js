@@ -74,6 +74,7 @@ function newTask(){
   };
   if (project.tasks.length==0) {$("#noTasks").remove()};
   project.tasks.push(newTask);
+  $('input[name ="description"]').val("");
   // projectCatalog[projIndex]=project;
   // localStorage.setItem("RdT_projectCatalog",JSON.stringify(projectCatalog));
   // populateTasksTable();
@@ -122,10 +123,12 @@ function populateTasksTable(){
         var days = endTime.diff(startTime, "days");
         tbody+="<td>"+days+"D "+hours+"H "+minutes+"M</td>";
       };
-      if (project.tasks[i].status=="Nova") {
-        tbody+="<td><button type='button' onclick='startTask("+project.tasks[i].id+")'>Iniciar</button></td>"
-      }else if (project.tasks[i].status=="Em Andamento") {
-        tbody+="<td><button type='button' onclick='endTask("+project.tasks[i].id+")'>Finalizar</button></td>"
+      if (project.tasks[i].owner==loggedUser) {
+        if (project.tasks[i].status=="Nova") {
+          tbody+="<td><button type='button' onclick='startTask("+project.tasks[i].id+")'>Iniciar</button></td>"
+        }else if (project.tasks[i].status=="Em Andamento") {
+          tbody+="<td><button type='button' onclick='endTask("+project.tasks[i].id+")'>Finalizar</button></td>"
+        };
       };
       // "<td><button type='button' onclick='editProject("+projectCatalog[i].id+")'>Editar</button></td>"
     };
@@ -149,10 +152,10 @@ function endTask(taskID){
 };
 
 function fillTaskOwnerList(){
-  getUserCatalog();
+  // getUserCatalog();
   var options = "";
-  for (var i = 0; i < userCatalog.length; i++) {
-    options+="<option value='"+userCatalog[i].username+"'>"+userCatalog[i].username+"</option>"
+  for (var i = 0; i < project.members.length; i++) {
+    options+="<option value='"+project.members[i]+"'>"+project.members[i]+"</option>"
   };
   $('select:last').append(options);
 };

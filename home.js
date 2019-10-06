@@ -68,28 +68,34 @@ function populateProjTable() {
   } else {
     tbody = "<tbody>";
     for (var i = 0; i < projectCatalog.length; i++) {
-      var nTotalTasks = projectCatalog[i].tasks.length;
-      var nTasksDone = 0;
-      for (var x = 0; x < projectCatalog[i].tasks.length; x++) {
-        if (projectCatalog[i].tasks[x].status=="Finalizada") {
-          nTasksDone++;
+      console.log(i,projectCatalog[i].members);
+      if (projectCatalog[i].members.includes(loggedUser)) {
+        var nTotalTasks = projectCatalog[i].tasks.length;
+        var nTasksDone = 0;
+        for (var x = 0; x < projectCatalog[i].tasks.length; x++) {
+          if (projectCatalog[i].tasks[x].status=="Finalizada") {
+            nTasksDone++;
+          };
         };
+        var taskProgress = ""
+        if (nTotalTasks==0) {
+          taskProgress+="<td>Não há tarefas</td>"
+        }else {
+          taskProgress+="<td>"+parseInt(nTasksDone/nTotalTasks*100)+"% ("+nTasksDone+"/"+nTotalTasks+")</td>"
+        };
+        tbody+= "<tr>"+
+            "<td>"+projectCatalog[i].id+"</td>"+
+            "<td>"+projectCatalog[i].projName+"</td>"+
+            taskProgress+
+            "<td>"+projectCatalog[i].members+"</td>"+
+            "<td><button type='button' onclick='editProject("+projectCatalog[i].id+")'>Editar</button></td>"
       };
-      var taskProgress = ""
-      if (nTotalTasks==0) {
-        taskProgress+="<td>Não há tarefas</td>"
-      }else {
-        taskProgress+="<td>"+parseInt(nTasksDone/nTotalTasks*100)+"% ("+nTasksDone+"/"+nTotalTasks+")</td>"
-      };
-      tbody+= "<tr>"+
-          "<td>"+projectCatalog[i].id+"</td>"+
-          "<td>"+projectCatalog[i].projName+"</td>"+
-          taskProgress+
-          "<td>"+projectCatalog[i].members+"</td>"+
-          "<td><button type='button' onclick='editProject("+projectCatalog[i].id+")'>Editar</button></td>"
     };
   };
   tbody+= "</tbody>"
+  if (tbody=="<tbody></tbody>") {
+    tbody = "<tbody><tr><td colspan='4'>Você ainda não participa de nenhum projeto.</td></tr></tbody>";
+  };
   $('table:last').append(tbody);
 };
 
